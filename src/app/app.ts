@@ -4,9 +4,10 @@ import { ProductsListComponent } from './components/containers/products-list/pro
 import { ProductsDetailsComponent } from './components/containers/products-details/products-details.component';
 import { Product } from './types/products.types';
 import { PRODUCTS } from './mocks/products.mocks';
+import { ShoppingCartModule } from './features/shopping-cart/shopping-cart.module';
 
 @Component({
-  imports: [RouterOutlet, ProductsListComponent, ProductsDetailsComponent],
+  imports: [RouterOutlet, ProductsListComponent, ProductsDetailsComponent, ShoppingCartModule],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
