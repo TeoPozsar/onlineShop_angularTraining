@@ -1,0 +1,10 @@
+<app-products-list-view
+  [products]="products"
+  (productSelected)="onProductSelected($event)"
+/>
+
+@if (selectedProduct) {
+  <app-products-details [product]="selectedProduct" />
+} @else {
+  <p>No product selected.</p>
+}

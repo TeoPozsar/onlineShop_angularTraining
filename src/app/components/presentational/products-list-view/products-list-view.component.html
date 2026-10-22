@@ -1,0 +1,46 @@
+
+<section class="products">
+  <div class="products-header">
+    <h2>Products</h2>
+    <div class="header-actions">
+      <button type="button" class="cart-button" aria-label="Shopping cart">
+        🛒
+      </button>
+      <button type="button" class="add-button">ADD</button>
+    </div>
+  </div>
+
+  <table class="products-table">
+    <thead>
+    <tr>
+      <th>Category</th>
+      <th>Product Name</th>
+      <th>Price</th>
+      <th><span class="visually-hidden">Details</span></th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (product of products; track product.id) {
+        <tr>
+          <td>{{ product.category }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price | currency }}</td>
+          <td>
+            <button
+              type="button"
+              class="details-button"
+              [attr.aria-label]="'View ' + product.name"
+              (click)="selectProduct(product)"
+            >
+              ›
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="4">No products available.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

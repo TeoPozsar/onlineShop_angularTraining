@@ -1,12 +1,18 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ProductsListComponent } from './components/containers/products-list/products-list.component';
+import { ProductsDetailsComponent } from './components/containers/products-details/products-details.component';
+import { Product } from './types/products.types';
+import { PRODUCTS } from './mocks/products.mocks';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ProductsListComponent, ProductsDetailsComponent],
   selector: 'app-root',
-  styleUrl: './app.css',
+  styleUrl: './app.scss',
   templateUrl: './app.html',
 })
 export class App {
   protected readonly title = signal('online-shop');
+
+  protected readonly selectedProduct: Product = PRODUCTS[0];
 }
