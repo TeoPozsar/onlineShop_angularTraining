@@ -4,10 +4,11 @@ import { ProductsListComponent } from './components/containers/products-list/pro
 import { ProductsDetailsComponent } from './components/containers/products-details/products-details.component';
 import { Product } from './types/products.types';
 import { PRODUCTS } from './mocks/products.mocks';
-import { ShoppingCartModule } from './features/shopping-cart/shopping-cart.module';
+import {ShoppingCartDetails} from './features/shopping-cart/components/containers/shopping-cart-details/shopping-cart-details';
+
 
 @Component({
-  imports: [RouterOutlet, ProductsListComponent, ProductsDetailsComponent, ShoppingCartModule],
+  imports: [RouterOutlet, ProductsListComponent, ProductsDetailsComponent, ShoppingCartDetails],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',

@@ -3,8 +3,10 @@ import { ShoppingCartDetailsView } from '../../presentational/shopping-cart-deta
 
 @Component({
   selector: 'app-shopping-cart-details',
-  standalone: false,
+  standalone: true,
+  imports: [ShoppingCartDetailsView],
   templateUrl: './shopping-cart-details.html',
-  styleUrl: './shopping-cart-details.scss',
+  styleUrls: ['./shopping-cart-details.scss'],
+
 })
 export class ShoppingCartDetails {}
