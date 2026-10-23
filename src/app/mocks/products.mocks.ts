@@ -1,25 +1,39 @@
 import { Product } from '../types/products.types';
 
+const createProduct = (
+  id: number,
+  name: string,
+  category: string,
+  description: string,
+  price: number
+): Product => ({
+  id,
+  name,
+  category,
+  description,
+  price,
+});
+
 export const PRODUCTS: Product[] = [
-  {
-    id: 1,
-    name: 'Wireless Headphones',
-    category: 'Electronics',
-    description: 'Comfortable wireless headphones',
-    price: 79.99
-  },
-  {
-    id: 2,
-    name: 'Mechanical Keyboard',
-    category: 'Electronics',
-    description: 'A keyboard for everyday work',
-    price: 109.99
-  },
-  {
-    id: 3,
-    name: 'Wireless Mouse',
-    category: 'Accessories',
-    description: 'A compact wireless mouse',
-    price: 29.99
-  }
+  createProduct(
+    1,
+    'Product 1',
+    'Category 1',
+    'Description for Product 1',
+    10.99
+  ),
+  createProduct(
+    2,
+    'Product 2',
+    'Category 2',
+    'Description for Product 2',
+    19.99
+  ),
+  createProduct(
+    3,
+    'Product 3',
+    'Category 1',
+    'Description for Product 3',
+    5.99
+  ),
 ];
