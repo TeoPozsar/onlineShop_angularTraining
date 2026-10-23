@@ -21,6 +21,7 @@ export class ProductsListComponent {
   }
 
   protected onAddToCart(product: Product): void {
+    console.log('Product added to cart:', product);
     this.addToCart.emit(product);
   }
 }
