@@ -1,6 +1,7 @@
 <app-products-list-view
   [products]="products"
   (productSelected)="onProductSelected($event)"
+  (addToCart)="onAddToCart($event)"
 />
 
 @if (selectedProduct) {

@@ -13,8 +13,13 @@ export class ProductsListViewComponent {
   @Input() products: Product[] = [];
 
   @Output() productSelected = new EventEmitter<Product>();
+  @Output() addToCart = new EventEmitter<Product>();
 
   selectProduct(product: Product): void {
     this.productSelected.emit(product);
+  }
+
+  addProductToCart(product: Product): void {
+    this.addToCart.emit(product);
   }
 }
