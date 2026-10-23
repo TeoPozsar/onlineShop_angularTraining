@@ -1,0 +1,9 @@
+<h1>Online Shop</h1>
+
+<app-products-list
+  (addToCart)="cart.addToCart($event)"
+/>
+
+<app-shopping-cart-details #cart />
+
+<router-outlet />

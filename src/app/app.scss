@@ -1,0 +1,22 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  background: #f8fafc;
+  color: #1f2937;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+app-products-list,
+app-shopping-cart-details {
+  display: block;
+  width: 100%;
+}
