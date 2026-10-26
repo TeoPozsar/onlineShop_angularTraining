@@ -1,4 +1,4 @@
-import { Component, Input , Output , EventEmitter } from '@angular/core';
+import {Component, ChangeDetectionStrategy, input, output} from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { Product } from '../../../types/products.types';
 
@@ -7,13 +7,14 @@ import { Product } from '../../../types/products.types';
   standalone: true,
   imports: [CurrencyPipe],
   templateUrl: './products-list-view.component.html',
-  styleUrls: ['./products-list-view.component.scss']
+  styleUrls: ['./products-list-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsListViewComponent {
-  @Input() products: Product[] = [];
+  readonly products = input<Product[]>([]);
 
-  @Output() productSelected = new EventEmitter<Product>();
-  @Output() addToCart = new EventEmitter<Product>();
+  readonly productSelected = output<Product>();
+  readonly addToCart = output<Product>();
 
   selectProduct(product: Product): void {
     this.productSelected.emit(product);

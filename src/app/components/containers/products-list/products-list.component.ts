@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {Component,  ChangeDetectionStrategy, signal, output} from '@angular/core';
 import { Product } from '../../../types/products.types';
 import { PRODUCTS } from '../../../mocks/products.mocks';
 import { ProductsListViewComponent } from '../../presentational/products-list-view/products-list-view.component';
@@ -9,19 +9,19 @@ import { ProductsDetailsComponent } from '../products-details/products-details.c
   imports: [ProductsListViewComponent, ProductsDetailsComponent],
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss'],
+  changeDetection : ChangeDetectionStrategy.OnPush,
 })
 export class ProductsListComponent {
-  @Output() addToCart = new EventEmitter<Product>();
+  readonly addToCart = output<Product>();
 
-  protected readonly products: Product[] = PRODUCTS;
-  protected selectedProduct: Product | null = null;
+  protected readonly products = PRODUCTS;
+  protected readonly selectedProduct = signal<Product | null>(null);
 
   protected onProductSelected(product: Product): void {
-    this.selectedProduct = product;
+    this.selectedProduct.set(product);
   }
 
   protected onAddToCart(product: Product): void {
-    console.log('Product added to cart:', product);
     this.addToCart.emit(product);
   }
 }

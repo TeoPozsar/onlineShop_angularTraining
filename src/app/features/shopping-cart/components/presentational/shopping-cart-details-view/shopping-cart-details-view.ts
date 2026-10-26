@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { Product } from '../../../../../types/products.types';
 
@@ -14,8 +14,9 @@ export interface CartItem {
   imports: [CurrencyPipe],
   styleUrls: ['./shopping-cart-details-view.scss'],
   templateUrl: './shopping-cart-details-view.html',
+  changeDetection : ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingCartDetailsView {
-  @Input() items: CartItem[] = [];
-  @Input() total = 0;
+  readonly items = input<CartItem[]>([]);
+  readonly total = input<number>(0);
 }

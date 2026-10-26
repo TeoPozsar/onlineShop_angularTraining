@@ -1,7 +1,6 @@
-
-import { Component, computed, signal } from '@angular/core';
-import { Product } from '../../../../../types/products.types';
-import { ShoppingCartDetailsView } from '../../presentational/shopping-cart-details-view/shopping-cart-details-view';
+import {ChangeDetectionStrategy, Component, computed, signal} from '@angular/core';
+import {Product} from '../../../../../types/products.types';
+import {ShoppingCartDetailsView} from '../../presentational/shopping-cart-details-view/shopping-cart-details-view';
 
 export interface CartItem {
   product: Product;
@@ -14,6 +13,7 @@ export interface CartItem {
   imports: [ShoppingCartDetailsView],
   templateUrl: './shopping-cart-details.html',
   styleUrls: ['./shopping-cart-details.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingCartDetails {
   protected readonly items = signal<CartItem[]>([]);
@@ -34,12 +34,12 @@ export class ShoppingCartDetails {
       if (existingItem) {
         return currentItems.map(item =>
           item.product.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {...item, quantity: item.quantity + 1}
             : item
         );
       }
 
-      return [...currentItems, { product, quantity: 1 }];
+      return [...currentItems, {product, quantity: 1}];
     });
   }
 }
