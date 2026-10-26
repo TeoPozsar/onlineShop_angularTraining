@@ -1,9 +1,17 @@
-
 @if (product(); as selectedProduct) {
-  <app-products-details-view
-    [product]="selectedProduct"
-    (addToCart)="onAddToCart($event)"
-  />
+  <app-products-details-view [product]="selectedProduct"/>
+
+  <button type="button" (click)="onAddToCart(selectedProduct)">
+    Add to Cart
+  </button>
+
+  <button
+    type="button"
+    (click)="onDeleteProduct(selectedProduct.id)"
+  >
+    Delete Product
+  </button>
+
 } @else {
-  <p>No product selected.</p>
+  <p>Loading product...</p>
 }
