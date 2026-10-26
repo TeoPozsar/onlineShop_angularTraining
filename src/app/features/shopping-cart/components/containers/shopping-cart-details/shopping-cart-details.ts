@@ -1,11 +1,9 @@
-import {ChangeDetectionStrategy, Component, computed, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {Product} from '../../../../../types/products.types';
 import {ShoppingCartDetailsView} from '../../presentational/shopping-cart-details-view/shopping-cart-details-view';
+import {CartItem, ShoppingCartService} from '../../../services/shopping-cart.service';
 
-export interface CartItem {
-  product: Product;
-  quantity: number;
-}
+export type {CartItem};
 
 @Component({
   selector: 'app-shopping-cart-details',
@@ -16,30 +14,13 @@ export interface CartItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingCartDetails {
-  protected readonly items = signal<CartItem[]>([]);
+  private readonly cartService = inject(ShoppingCartService);
 
-  public readonly total = computed(() =>
-    this.items().reduce(
-      (sum, item) => sum + item.product.price * item.quantity,
-      0
-    )
-  );
+  protected readonly items = this.cartService.items;
+
+  public readonly total = this.cartService.total;
 
   public addToCart(product: Product): void {
-    this.items.update(currentItems => {
-      const existingItem = currentItems.find(
-        item => item.product.id === product.id
-      );
-
-      if (existingItem) {
-        return currentItems.map(item =>
-          item.product.id === product.id
-            ? {...item, quantity: item.quantity + 1}
-            : item
-        );
-      }
-
-      return [...currentItems, {product, quantity: 1}];
-    });
+    this.cartService.addToCart(product);
   }
 }

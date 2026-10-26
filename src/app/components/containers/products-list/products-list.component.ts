@@ -1,24 +1,25 @@
-import {Component,  ChangeDetectionStrategy, signal, output} from '@angular/core';
+import {Component,  ChangeDetectionStrategy, signal, output , inject} from '@angular/core';
 import { Product } from '../../../types/products.types';
 import { PRODUCTS } from '../../../mocks/products.mocks';
 import { ProductsListViewComponent } from '../../presentational/products-list-view/products-list-view.component';
-import { ProductsDetailsComponent } from '../products-details/products-details.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
-  imports: [ProductsListViewComponent, ProductsDetailsComponent],
+  standalone: true,
+  imports: [ProductsListViewComponent],
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss'],
   changeDetection : ChangeDetectionStrategy.OnPush,
 })
 export class ProductsListComponent {
   readonly addToCart = output<Product>();
+  private readonly router = inject(Router);
 
   protected readonly products = PRODUCTS;
-  protected readonly selectedProduct = signal<Product | null>(null);
 
   protected onProductSelected(product: Product): void {
-    this.selectedProduct.set(product);
+    this.router.navigate(['/products', product.id]);
   }
 
   protected onAddToCart(product: Product): void {

@@ -1,6 +1,9 @@
 
-@if (product()) {
-  <app-products-details-view [product]="product()" />
+@if (product(); as selectedProduct) {
+  <app-products-details-view
+    [product]="selectedProduct"
+    (addToCart)="onAddToCart($event)"
+  />
 } @else {
   <p>No product selected.</p>
 }

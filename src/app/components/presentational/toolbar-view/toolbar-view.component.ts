@@ -1,0 +1,19 @@
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+
+@Component({
+  selector: 'app-toolbar-view',
+  standalone: true,
+  templateUrl: './toolbar-view.component.html',
+  styleUrls: ['./toolbar-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ToolbarViewComponent {
+  readonly title = input<string>('Online Shop');
+  readonly cartItemCount = input<number>(0);
+
+  readonly cartClick = output<void>();
+
+  protected onCartClick(): void {
+    this.cartClick.emit();
+  }
+}

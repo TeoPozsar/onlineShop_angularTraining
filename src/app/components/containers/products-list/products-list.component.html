@@ -4,8 +4,3 @@
   (addToCart)="onAddToCart($event)"
 />
 
-@if (selectedProduct(); as product) {
-  <app-products-details [product]="product" />
-} @else {
-  <p>No product selected.</p>
-}

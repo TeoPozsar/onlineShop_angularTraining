@@ -1,5 +1,6 @@
-import {Component, ChangeDetectionStrategy, input} from '@angular/core';
+import {Component, ChangeDetectionStrategy, inject, input, output} from '@angular/core';
 import {CurrencyPipe} from '@angular/common';
+import {Router} from '@angular/router';
 import {Product} from '../../../types/products.types';
 
 @Component({
@@ -11,6 +12,17 @@ import {Product} from '../../../types/products.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsDetailsViewComponent {
+  private readonly router = inject(Router);
+
   readonly product = input.required<Product>();
 
+  readonly addToCart = output<Product>();
+
+  addProductToCart(): void {
+    this.addToCart.emit(this.product());
+  }
+
+  goBackToProducts(): void {
+    void this.router.navigate(['/products']);
+  }
 }

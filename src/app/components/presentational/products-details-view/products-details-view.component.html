@@ -14,5 +14,20 @@
 
 
   </div>
+
+  <div class="details-actions">
+    <button
+      type="button"
+      class="add-button"
+      [attr.aria-label]="'Add ' + product().name + ' to cart'"
+      (click)="addProductToCart()"
+    >
+      Add to Cart
+    </button>
+
+    <button type="button" class="back-button" (click)="goBackToProducts()">
+      Back to Products
+    </button>
+  </div>
 </section>
 
