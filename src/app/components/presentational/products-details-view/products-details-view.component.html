@@ -1,6 +1,9 @@
 <section class="product-details">
   <div class="details-header">
     <h2>Product: {{ product().name }}</h2>
+    <button type="button" class="back-button" (click)="goBackToProducts()">
+      Back to Products
+    </button>
   </div>
 
   <div class="details-content">
@@ -25,9 +28,13 @@
       Add to Cart
     </button>
 
-    <button type="button" class="back-button" (click)="goBackToProducts()">
-      Back to Products
+    <button
+      type="button"
+      class="delete-button"
+      [attr.aria-label]="'Delete ' + product().name"
+      (click)="removeProduct()"
+    >
+      Delete Product
     </button>
   </div>
 </section>
-

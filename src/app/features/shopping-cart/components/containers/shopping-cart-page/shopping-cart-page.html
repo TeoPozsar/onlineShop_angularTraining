@@ -1,5 +1,17 @@
-<button type="button" (click)="goToProducts()">
+<button type="button" class="back-button" (click)="goToProducts()">
   ← Back to Products
 </button>
 
 <app-shopping-cart-details />
+
+
+<button
+  type="button"
+  class="add-button"
+  (click)="checkout()"
+  [disabled]="isCheckingOut()"
+>
+  {{ isCheckingOut() ? 'Processing...' : 'Checkout' }}
+</button>
+
+<p>{{ checkoutMessage() }}</p>

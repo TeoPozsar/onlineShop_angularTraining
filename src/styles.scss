@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+.add-button,
+.back-button {
+  min-height: 44px;
+  padding: 0.7rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.add-button {
+  background: #00b894;
+}
+
+.add-button:hover {
+  background: #019a7c;
+  box-shadow: 0 3px 8px rgba(0, 184, 148, 0.2);
+  transform: translateY(-1px);
+}
+
+.add-button:active {
+  transform: translateY(0);
+}
+
+.add-button:focus-visible {
+  outline: 3px solid #6ee7b7;
+  outline-offset: 2px;
+}
+
+.back-button {
+  background: #0984e3;
+}
+
+.back-button:hover {
+  background: #0769b5;
+  box-shadow: 0 3px 8px rgba(9, 132, 227, 0.2);
+  transform: translateY(-1px);
+}
+
+.back-button:active {
+  transform: translateY(0);
+}
+
+.back-button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}

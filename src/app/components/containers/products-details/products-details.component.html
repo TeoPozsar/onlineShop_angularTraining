@@ -1,17 +1,9 @@
 @if (product(); as selectedProduct) {
-  <app-products-details-view [product]="selectedProduct"/>
-
-  <button type="button" (click)="onAddToCart(selectedProduct)">
-    Add to Cart
-  </button>
-
-  <button
-    type="button"
-    (click)="onDeleteProduct(selectedProduct.id)"
-  >
-    Delete Product
-  </button>
-
+  <app-products-details-view
+    [product]="selectedProduct"
+    (addToCart)="onAddToCart($event)"
+    (deleteProduct)="onDeleteProduct($event)"
+  />
 } @else {
   <p>Loading product...</p>
 }

@@ -8,6 +8,11 @@
 }
 
 .details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
 
@@ -63,12 +68,12 @@
   align-items: center;
 }
 
-.add-button {
+.delete-button {
   min-height: 44px;
   padding: 0.7rem 1.1rem;
   border: none;
   border-radius: 8px;
-  background: #00b894;
+  background: #d63031;
   color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
@@ -79,53 +84,27 @@
     box-shadow 0.2s ease;
 }
 
-.add-button:hover {
-  background: #019a7c;
-  box-shadow: 0 3px 8px rgba(0, 184, 148, 0.2);
+.delete-button:hover {
+  background: #b02324;
+  box-shadow: 0 3px 8px rgba(214, 48, 49, 0.2);
   transform: translateY(-1px);
 }
 
-.add-button:active {
+.delete-button:active {
   transform: translateY(0);
 }
 
-.add-button:focus-visible {
-  outline: 3px solid #6ee7b7;
-  outline-offset: 2px;
-}
-
-.back-button {
-  min-height: 44px;
-  padding: 0.7rem 1.1rem;
-  border: none;
-  border-radius: 8px;
-  background: #0984e3;
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.back-button:hover {
-  background: #0769b5;
-  box-shadow: 0 3px 8px rgba(9, 132, 227, 0.2);
-  transform: translateY(-1px);
-}
-
-.back-button:active {
-  transform: translateY(0);
-}
-
-.back-button:focus-visible {
-  outline: 3px solid #93c5fd;
+.delete-button:focus-visible {
+  outline: 3px solid #fca5a5;
   outline-offset: 2px;
 }
 
 @media (max-width: 600px) {
+  .details-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .details-content {
     flex-direction: column-reverse;
   }

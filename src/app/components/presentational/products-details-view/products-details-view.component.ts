@@ -18,8 +18,14 @@ export class ProductsDetailsViewComponent {
 
   readonly addToCart = output<Product>();
 
+  readonly deleteProduct = output<string>();
+
   addProductToCart(): void {
     this.addToCart.emit(this.product());
+  }
+
+  removeProduct(): void {
+    this.deleteProduct.emit(this.product().id);
   }
 
   goBackToProducts(): void {
