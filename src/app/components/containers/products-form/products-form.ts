@@ -1,10 +1,4 @@
-
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,9 +28,11 @@ export class ProductsFormComponent implements OnInit {
   });
 
   private productId: string | null = null;
+  protected isEditing = false;
 
   ngOnInit(): void {
     this.productId = this.route.snapshot.paramMap.get('id');
+    this.isEditing = this.productId !== null;
 
     if (this.productId) {
       this.productsService.getProductById(this.productId).subscribe({
@@ -71,6 +67,4 @@ export class ProductsFormComponent implements OnInit {
       this.router.navigate(['/products']);
     }
   }
-
-
 }

@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -12,6 +11,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class ProductsFormViewComponent {
   readonly productForm = input.required<FormGroup>();
+  readonly title = input.required<string>();
   readonly save = output<void>();
   readonly cancel = output<void>();
 }

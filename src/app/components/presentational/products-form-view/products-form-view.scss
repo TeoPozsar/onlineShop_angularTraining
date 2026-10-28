@@ -1,0 +1,142 @@
+.product-form {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+  color: #1f2937;
+
+  h1 {
+    margin: 0 0 1.75rem;
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+
+  label {
+    margin-bottom: 0.45rem;
+    color: #374151;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  input,
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #111827;
+    font: inherit;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15);
+      outline: none;
+    }
+
+    &.invalid {
+      border-color: #d32f2f;
+    }
+  }
+
+  input {
+    min-height: 44px;
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+}
+
+.error-message {
+  margin: 0.4rem 0 0;
+  color: #d32f2f;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+
+  button {
+    min-height: 44px;
+    padding: 0.7rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus-visible {
+      outline: 3px solid rgba(25, 118, 210, 0.25);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.save-button {
+  border: 1px solid #1976d2;
+  background-color: #1976d2;
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    border-color: #125ca1;
+    background-color: #125ca1;
+  }
+
+  &:disabled {
+    border-color: #93c5e8;
+    background-color: #93c5e8;
+    cursor: not-allowed;
+  }
+}
+
+.cancel-button {
+  border: 1px solid #9ca3af;
+  background-color: transparent;
+  color: #374151;
+
+  &:hover {
+    border-color: #6b7280;
+    background-color: #f3f4f6;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-form {
+    padding: 1.5rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}

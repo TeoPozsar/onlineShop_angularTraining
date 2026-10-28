@@ -1,25 +1,88 @@
+<form class="product-form" [formGroup]="productForm()" (ngSubmit)="save.emit()">
+  <h1>{{ title() }}</h1>
 
-<form [formGroup]="productForm()" (ngSubmit)="save.emit()">
-  <label for="name">Name</label>
-  <input id="name" type="text" formControlName="name" />
+  <div class="form-field">
+    <label for="name">Name</label>
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      [class.invalid]="
+        productForm().controls['name'].invalid && productForm().controls['name'].touched
+      "
+    />
+    @if (productForm().controls['name'].invalid && productForm().controls['name'].touched) {
+      <p class="error-message">Name is required.</p>
+    }
+  </div>
 
-  <label for="category">Category</label>
-  <input id="category" type="text" formControlName="category" />
+  <div class="form-field">
+    <label for="category">Category</label>
+    <input
+      id="category"
+      type="text"
+      formControlName="category"
+      [class.invalid]="
+        productForm().controls['category'].invalid && productForm().controls['category'].touched
+      "
+    />
+    @if (productForm().controls['category'].invalid && productForm().controls['category'].touched) {
+      <p class="error-message">Category is required.</p>
+    }
+  </div>
 
-  <label for="image">Image URL</label>
-  <input id="image" type="text" formControlName="image" />
+  <div class="form-field">
+    <label for="image">Image URL</label>
+    <input
+      id="image"
+      type="url"
+      formControlName="image"
+      [class.invalid]="
+        productForm().controls['image'].invalid && productForm().controls['image'].touched
+      "
+    />
+    @if (productForm().controls['image'].invalid && productForm().controls['image'].touched) {
+      <p class="error-message">Image URL is required.</p>
+    }
+  </div>
 
-  <label for="price">Price</label>
-  <input id="price" type="number" formControlName="price" />
+  <div class="form-field">
+    <label for="price">Price</label>
+    <input
+      id="price"
+      type="number"
+      formControlName="price"
+      min="0.01"
+      step="0.01"
+      [class.invalid]="
+        productForm().controls['price'].invalid && productForm().controls['price'].touched
+      "
+    />
+    @if (productForm().controls['price'].invalid && productForm().controls['price'].touched) {
+      <p class="error-message">Price must be greater than zero.</p>
+    }
+  </div>
 
-  <label for="description">Description</label>
-  <textarea id="description" formControlName="description"></textarea>
+  <div class="form-field">
+    <label for="description">Description</label>
+    <textarea
+      id="description"
+      formControlName="description"
+      rows="5"
+      [class.invalid]="
+        productForm().controls['description'].invalid &&
+        productForm().controls['description'].touched
+      "
+    ></textarea>
+    @if (
+      productForm().controls['description'].invalid && productForm().controls['description'].touched
+    ) {
+      <p class="error-message">Description is required.</p>
+    }
+  </div>
 
-  <button type="submit" [disabled]="productForm().invalid">
-    Save
-  </button>
-
-  <button type="button" (click)="cancel.emit()">
-    Cancel
-  </button>
+  <div class="form-actions">
+    <button class="save-button" type="submit" [disabled]="productForm().invalid">Save</button>
+    <button class="cancel-button" type="button" (click)="cancel.emit()">Cancel</button>
+  </div>
 </form>
