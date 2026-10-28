@@ -34,4 +34,8 @@ export class ProductsListComponent {
   protected onAddToCart(product: Product): void {
     this.addToCart.emit(product);
   }
+
+  protected onAddProduct(): void {
+    this.router.navigate(['/products/new']);
+  }
 }

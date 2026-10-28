@@ -15,6 +15,7 @@ export class ProductsListViewComponent {
 
   readonly productSelected = output<Product>();
   readonly addToCart = output<Product>();
+  readonly addProduct = output<void>();
 
   selectProduct(product: Product): void {
     this.productSelected.emit(product);
@@ -22,5 +23,9 @@ export class ProductsListViewComponent {
 
   addProductToCart(product: Product): void {
     this.addToCart.emit(product);
+  }
+
+  onAddProduct(): void {
+    this.addProduct.emit();
   }
 }

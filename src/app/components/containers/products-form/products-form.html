@@ -1,0 +1,25 @@
+<app-products-form-view
+  [productForm]="productForm"
+  (save)="onSave()"
+  (cancel)="onCancel()"
+/>
+
+@if (productForm().controls['name'].invalid &&
+productForm().controls['name'].touched) {
+  <p class="error-message">Name is required.</p>
+}
+
+@if (productForm().controls['category'].invalid &&
+productForm().controls['category'].touched) {
+  <p class="error-message">Category is required.</p>
+}
+
+@if (productForm().controls['description'].invalid &&
+productForm().controls['description'].touched) {
+  <p class="error-message">Description is required.</p>
+}
+
+@if (productForm().controls['price'].hasError('min') &&
+productForm().controls['price'].touched) {
+  <p class="error-message">Price must be greater than zero.</p>
+}

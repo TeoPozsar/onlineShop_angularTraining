@@ -7,6 +7,14 @@
   </div>
 
   <div class="details-content">
+
+    <div class="details-image">
+      <img
+        [src]="product().image"
+        [alt]="product().name"
+      />
+    </div>
+
     <div class="details-info">
       <p><strong>Name:</strong> {{ product().name }}</p>
       <p><strong>Category:</strong> {{ product().category }}</p>
@@ -26,6 +34,14 @@
       (click)="addProductToCart()"
     >
       Add to Cart
+    </button>
+
+    <button
+      type="button"
+      class="edit-button"
+      (click)="editProductDetails()"
+    >
+      Edit Product
     </button>
 
     <button

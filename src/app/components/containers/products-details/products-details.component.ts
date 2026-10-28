@@ -46,4 +46,8 @@ export class ProductsDetailsComponent implements OnInit {
       error: error => console.error('Failed to delete product:', error),
     });
   }
+
+  protected onEditProduct(id: string): void {
+    this.router.navigate(['/products', id, 'edit']);
+  }
 }

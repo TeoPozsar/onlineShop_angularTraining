@@ -1,0 +1,33 @@
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.add-product-button {
+  padding: 0.65rem 1.1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #1976d2;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #125ca1;
+  }
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0.5rem;
+}

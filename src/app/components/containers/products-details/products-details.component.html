@@ -2,6 +2,7 @@
   <app-products-details-view
     [product]="selectedProduct"
     (addToCart)="onAddToCart($event)"
+    (editProduct)="onEditProduct($event)"
     (deleteProduct)="onDeleteProduct($event)"
   />
 } @else {

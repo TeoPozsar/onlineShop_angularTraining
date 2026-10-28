@@ -20,6 +20,8 @@ export class ProductsDetailsViewComponent {
 
   readonly deleteProduct = output<string>();
 
+  readonly  editProduct = output<string>();
+
   addProductToCart(): void {
     this.addToCart.emit(this.product());
   }
@@ -30,5 +32,9 @@ export class ProductsDetailsViewComponent {
 
   goBackToProducts(): void {
     void this.router.navigate(['/products']);
+  }
+
+  editProductDetails(): void {
+    this.editProduct.emit(this.product().id);
   }
 }

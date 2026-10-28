@@ -1,0 +1,25 @@
+
+<form [formGroup]="productForm()" (ngSubmit)="save.emit()">
+  <label for="name">Name</label>
+  <input id="name" type="text" formControlName="name" />
+
+  <label for="category">Category</label>
+  <input id="category" type="text" formControlName="category" />
+
+  <label for="image">Image URL</label>
+  <input id="image" type="text" formControlName="image" />
+
+  <label for="price">Price</label>
+  <input id="price" type="number" formControlName="price" />
+
+  <label for="description">Description</label>
+  <textarea id="description" formControlName="description"></textarea>
+
+  <button type="submit" [disabled]="productForm().invalid">
+    Save
+  </button>
+
+  <button type="button" (click)="cancel.emit()">
+    Cancel
+  </button>
+</form>

@@ -63,6 +63,7 @@
 .details-actions {
   margin-top: 1.5rem;
   display: flex;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 0.75rem;
   align-items: center;
@@ -107,5 +108,20 @@
 
   .details-content {
     flex-direction: column-reverse;
+  }
+}
+
+.edit-button {
+  padding: 0.65rem 1.1rem;
+  border: 1px solid #1976d2;
+  border-radius: 6px;
+  background-color: blue;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #125ca1;
   }
 }
