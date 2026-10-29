@@ -15,6 +15,8 @@ export class ProductsDetailsViewComponent {
   private readonly router = inject(Router);
 
   readonly product = input.required<Product>();
+  readonly isAdmin = input(false);
+  readonly isCustomer = input(false);
 
   readonly addToCart = output<Product>();
 

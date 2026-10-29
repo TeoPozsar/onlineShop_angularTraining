@@ -2,6 +2,7 @@
   title="Online Shop"
   [cartItemCount]="cartItemCount()"
   [username]="currentUser()?.username ?? null"
+  [showCart]="!isAdmin()"
   (cartClick)="onCartClick()"
   (logoutClick)="onLogoutClick()"
 />

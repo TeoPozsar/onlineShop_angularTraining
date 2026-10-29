@@ -1,9 +1,10 @@
-import {Component,  ChangeDetectionStrategy, signal, output , inject} from '@angular/core';
+import {Component, ChangeDetectionStrategy, signal, output, inject} from '@angular/core';
 import { Product } from '../../../types/products.types';
 import { PRODUCTS } from '../../../mocks/products.mocks';
 import { ProductsListViewComponent } from '../../presentational/products-list-view/products-list-view.component';
 import {Router} from '@angular/router';
 import {ProductsService} from '../../../services/products';
+import {AuthService} from '../../../services/auth';
 
 @Component({
   selector: 'app-products-list',
@@ -17,8 +18,11 @@ export class ProductsListComponent {
   readonly addToCart = output<Product>();
   private readonly router = inject(Router);
   private readonly productsService = inject(ProductsService);
+  private readonly authService = inject(AuthService);
 
   protected readonly products = signal<Product[]>([]);
+  protected readonly isAdmin = this.authService.isAdmin;
+  protected readonly isCustomer = this.authService.isCustomer;
 
   ngOnInit(): void {
     this.productsService.getProducts().subscribe({
@@ -32,6 +36,10 @@ export class ProductsListComponent {
   }
 
   protected onAddToCart(product: Product): void {
+    if (!this.isCustomer()) {
+      return;
+    }
+
     this.addToCart.emit(product);
   }
 

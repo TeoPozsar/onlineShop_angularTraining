@@ -2,9 +2,11 @@
   <div class="products-header">
     <h2>Products</h2>
 
-    <button type="button" class="add-product-button" (click)="onAddProduct()">
-      + Add Product
-    </button>
+    @if (isAdmin()) {
+      <button type="button" class="add-product-button" (click)="onAddProduct()">
+        + Add Product
+      </button>
+    }
 
   </div>
 

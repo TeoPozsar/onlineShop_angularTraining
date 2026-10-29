@@ -5,6 +5,9 @@ import { ShoppingCartPage } from './features/shopping-cart/components/containers
 import { ProductsFormComponent } from './components/containers/products-form/products-form';
 import { Login } from './components/containers/login/login';
 import { authGuard } from './guards/auth-guard';
+import { roleGuard } from './guards/role-guard';
+
+const customerGuard = roleGuard(['user', 'customer'], { deniedRoles: ['admin'] });
 
 export const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -12,12 +15,12 @@ export const routes: Routes = [
   {
     path: 'products/new',
     component: ProductsFormComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, roleGuard(['admin'])],
   },
   {
     path: 'products/:id/edit',
     component: ProductsFormComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, roleGuard(['admin'])],
   },
   {
     path: 'products/:id',
@@ -26,7 +29,12 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: ShoppingCartPage,
-    canActivate: [authGuard],
+    canActivate: [authGuard, customerGuard]
+  },
+  {
+    path: 'checkout',
+    component: ShoppingCartPage,
+    canActivate: [authGuard, customerGuard]
   },
   { path: 'login', component: Login },
 ];

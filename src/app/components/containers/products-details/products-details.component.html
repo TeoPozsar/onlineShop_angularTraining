@@ -1,6 +1,8 @@
 @if (product(); as selectedProduct) {
   <app-products-details-view
     [product]="selectedProduct"
+    [isAdmin]="isAdmin()"
+    [isCustomer]="isCustomer()"
     (addToCart)="onAddToCart($event)"
     (editProduct)="onEditProduct($event)"
     (deleteProduct)="onDeleteProduct($event)"

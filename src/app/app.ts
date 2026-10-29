@@ -19,6 +19,7 @@ export class App implements OnInit {
 
   protected readonly cartItemCount = this.cartService.totalQuantity;
   protected readonly currentUser = this.authService.currentUser;
+  protected readonly isAdmin = this.authService.isAdmin;
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {

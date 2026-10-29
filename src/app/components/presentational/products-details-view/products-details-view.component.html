@@ -27,30 +27,34 @@
   </div>
 
   <div class="details-actions">
-    <button
-      type="button"
-      class="add-button"
-      [attr.aria-label]="'Add ' + product().name + ' to cart'"
-      (click)="addProductToCart()"
-    >
-      Add to Cart
-    </button>
+    @if (isCustomer()) {
+      <button
+        type="button"
+        class="add-button"
+        [attr.aria-label]="'Add ' + product().name + ' to cart'"
+        (click)="addProductToCart()"
+      >
+        Add to Cart
+      </button>
+    }
 
-    <button
-      type="button"
-      class="edit-button"
-      (click)="editProductDetails()"
-    >
-      Edit Product
-    </button>
+    @if (isAdmin()) {
+      <button
+        type="button"
+        class="edit-button"
+        (click)="editProductDetails()"
+      >
+        Edit Product
+      </button>
 
-    <button
-      type="button"
-      class="delete-button"
-      [attr.aria-label]="'Delete ' + product().name"
-      (click)="removeProduct()"
-    >
-      Delete Product
-    </button>
+      <button
+        type="button"
+        class="delete-button"
+        [attr.aria-label]="'Delete ' + product().name"
+        (click)="removeProduct()"
+      >
+        Delete Product
+      </button>
+    }
   </div>
 </section>

@@ -12,6 +12,8 @@ import { Product } from '../../../types/products.types';
 })
 export class ProductsListViewComponent {
   readonly products = input<Product[]>([]);
+  readonly isAdmin = input(false);
+  readonly isCustomer = input(false);
 
   readonly productSelected = output<Product>();
   readonly addToCart = output<Product>();

@@ -11,6 +11,7 @@ export class ToolbarViewComponent {
   readonly title = input<string>('Online Shop');
   readonly cartItemCount = input<number>(0);
   readonly username = input<string | null>(null);
+  readonly showCart = input<boolean>(true);
   readonly logoutClick = output<void>();
 
   protected onLogoutClick(): void {

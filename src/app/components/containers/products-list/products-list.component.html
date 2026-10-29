@@ -1,7 +1,8 @@
 <app-products-list-view
   [products]="products()"
+  [isAdmin]="isAdmin()"
+  [isCustomer]="isCustomer()"
   (productSelected)="onProductSelected($event)"
   (addToCart)="onAddToCart($event)"
   (addProduct)="onAddProduct()"
 />
-

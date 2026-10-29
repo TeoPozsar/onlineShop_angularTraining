@@ -4,6 +4,7 @@ import { Product } from '../../../types/products.types';
 import { ProductsService } from '../../../services/products';
 import { ProductsDetailsViewComponent } from '../../presentational/products-details-view/products-details-view.component';
 import { ShoppingCartService } from '../../../features/shopping-cart/services/shopping-cart.service';
+import { AuthService } from '../../../services/auth';
 
 @Component({
   selector: 'app-products-details',
@@ -18,8 +19,11 @@ export class ProductsDetailsComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(ShoppingCartService);
+  private readonly authService = inject(AuthService);
 
   readonly product = signal<Product | undefined>(undefined);
+  protected readonly isAdmin = this.authService.isAdmin;
+  protected readonly isCustomer = this.authService.isCustomer;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -35,6 +39,10 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   protected onAddToCart(product: Product): void {
+    if (!this.isCustomer()) {
+      return;
+    }
+
     this.cartService.addToCart(product);
   }
 
