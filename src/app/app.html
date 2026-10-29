@@ -1,7 +1,9 @@
 <app-toolbar-view
   title="Online Shop"
   [cartItemCount]="cartItemCount()"
+  [username]="currentUser()?.username ?? null"
   (cartClick)="onCartClick()"
+  (logoutClick)="onLogoutClick()"
 />
 
 <router-outlet />

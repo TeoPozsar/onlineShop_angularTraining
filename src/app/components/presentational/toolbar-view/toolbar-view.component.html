@@ -1,16 +1,30 @@
 <header class="toolbar">
   <h1>{{ title() }}</h1>
 
-  <button
-    type="button"
-    class="cart-button"
-    aria-label="Open shopping cart"
-    (click)="onCartClick()"
-  >
-    <span class="cart-icon" aria-hidden="true">&#128722;</span>
-
-    @if (cartItemCount() > 0) {
-      <span class="cart-badge">{{ cartItemCount() }}</span>
+  <div class="toolbar-actions">
+    @if (username()) {
+      <span class="username">Hello, {{ username() }}</span>
     }
-  </button>
+
+    <button
+      type="button"
+      class="cart-button"
+      aria-label="Open shopping cart"
+      (click)="onCartClick()"
+    >
+      <span class="cart-icon" aria-hidden="true">&#128722;</span>
+
+      @if (cartItemCount() > 0) {
+        <span class="cart-badge">{{ cartItemCount() }}</span>
+      }
+    </button>
+  </div>
 </header>
+
+@if (username()) {
+  <div class="logout-row">
+    <button type="button" class="logout-button" (click)="onLogoutClick()">
+      Logout
+    </button>
+  </div>
+}

@@ -10,6 +10,12 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 export class ToolbarViewComponent {
   readonly title = input<string>('Online Shop');
   readonly cartItemCount = input<number>(0);
+  readonly username = input<string | null>(null);
+  readonly logoutClick = output<void>();
+
+  protected onLogoutClick(): void {
+    this.logoutClick.emit();
+  }
 
   readonly cartClick = output<void>();
 
