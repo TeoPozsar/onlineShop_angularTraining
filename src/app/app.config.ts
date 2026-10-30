@@ -9,14 +9,16 @@ import {provideEffects} from '@ngrx/effects';
 import {ProductsEffects} from './features/products/state/products.effects';
 import {provideStoreDevtools} from '@ngrx/store-devtools';
 import { isDevMode} from '@angular/core';
+import { userReducer } from './features/user/state/user.reducer';
+import { UserEffects } from './features/user/state/user.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
-    provideStore({ products: productsReducer }),
-    provideEffects([ProductsEffects]),
+    provideStore({ products: productsReducer, user: userReducer }),
+    provideEffects([ProductsEffects, UserEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
