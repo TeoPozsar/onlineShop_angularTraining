@@ -1,8 +1,18 @@
-<app-products-list-view
-  [products]="products()"
-  [isAdmin]="isAdmin()"
-  [isCustomer]="isCustomer()"
-  (productSelected)="onProductSelected($event)"
-  (addToCart)="onAddToCart($event)"
-  (addProduct)="onAddProduct()"
-/>
+@if (loading$ | async) {
+  <p>Loading products...</p>
+}
+
+@if (error$ | async; as error) {
+  <p class="error">{{ error }}</p>
+}
+
+@if (products$ | async; as products) {
+  <app-products-list-view
+    [products]="products"
+    [isAdmin]="isAdmin()"
+    [isCustomer]="isCustomer()"
+    (productSelected)="onProductSelected($event)"
+    (addToCart)="onAddToCart($event)"
+    (addProduct)="onAddProduct()"
+  />
+}
