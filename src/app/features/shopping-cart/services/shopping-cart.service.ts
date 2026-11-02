@@ -40,4 +40,8 @@ export class ShoppingCartService {
       return [...currentItems, {product, quantity: 1}];
     });
   }
+
+  public clearCart(): void {
+    this.cartItems.set([]);
+  }
 }

@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule , Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { loadUser } from '../../../features/user/state/user.actions';
-
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule , MatButtonModule],
   selector: 'app-login',
   standalone : true,
   styleUrl: './login.scss',

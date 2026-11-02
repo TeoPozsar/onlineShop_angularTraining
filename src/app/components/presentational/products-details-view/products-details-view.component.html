@@ -1,18 +1,20 @@
+
 <section class="product-details">
   <div class="details-header">
     <h2>Product: {{ product().name }}</h2>
-    <button type="button" class="back-button" (click)="goBackToProducts()">
+    <button
+      mat-button
+      type="button"
+      class="app-button"
+      (click)="goBackToProducts()"
+    >
       Back to Products
     </button>
   </div>
 
   <div class="details-content">
-
     <div class="details-image">
-      <img
-        [src]="product().image"
-        [alt]="product().name"
-      />
+      <img [src]="product().image" [alt]="product().name" />
     </div>
 
     <div class="details-info">
@@ -22,15 +24,14 @@
       <p><strong>Description:</strong></p>
       <p>{{ product().description }}</p>
     </div>
-
-
   </div>
 
   <div class="details-actions">
     @if (isCustomer()) {
       <button
+        mat-button
         type="button"
-        class="add-button"
+        class="app-button"
         [attr.aria-label]="'Add ' + product().name + ' to cart'"
         (click)="addProductToCart()"
       >
@@ -40,16 +41,18 @@
 
     @if (isAdmin()) {
       <button
+        mat-button
         type="button"
-        class="edit-button"
+        class="app-button"
         (click)="editProductDetails()"
       >
         Edit Product
       </button>
 
       <button
+        mat-button
         type="button"
-        class="delete-button"
+        class="app-button"
         [attr.aria-label]="'Delete ' + product().name"
         (click)="removeProduct()"
       >

@@ -75,52 +75,6 @@
   justify-content: flex-end;
   gap: 0.75rem;
   margin-top: 1.75rem;
-
-  button {
-    min-height: 44px;
-    padding: 0.7rem 1.25rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
-
-    &:focus-visible {
-      outline: 3px solid rgba(25, 118, 210, 0.25);
-      outline-offset: 2px;
-    }
-  }
-}
-
-.save-button {
-  border: 1px solid #1976d2;
-  background-color: #1976d2;
-  color: #fff;
-
-  &:hover:not(:disabled) {
-    border-color: #125ca1;
-    background-color: #125ca1;
-  }
-
-  &:disabled {
-    border-color: #93c5e8;
-    background-color: #93c5e8;
-    cursor: not-allowed;
-  }
-}
-
-.cancel-button {
-  border: 1px solid #9ca3af;
-  background-color: transparent;
-  color: #374151;
-
-  &:hover {
-    border-color: #6b7280;
-    background-color: #f3f4f6;
-  }
 }
 
 @media (max-width: 600px) {
@@ -135,7 +89,7 @@
   .form-actions {
     flex-direction: column;
 
-    button {
+    .app-button {
       width: 100%;
     }
   }

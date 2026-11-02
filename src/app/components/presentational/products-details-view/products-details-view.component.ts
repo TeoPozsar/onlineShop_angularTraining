@@ -2,11 +2,12 @@ import {Component, ChangeDetectionStrategy, inject, input, output} from '@angula
 import {CurrencyPipe} from '@angular/common';
 import {Router} from '@angular/router';
 import {Product} from '../../../types/products.types';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-products-details-view',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, MatButtonModule],
   templateUrl: './products-details-view.component.html',
   styleUrls: ['./products-details-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

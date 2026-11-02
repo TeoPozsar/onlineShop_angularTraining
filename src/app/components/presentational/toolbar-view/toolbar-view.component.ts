@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-toolbar-view',
+  imports: [MatButtonModule],
   standalone: true,
   templateUrl: './toolbar-view.component.html',
   styleUrls: ['./toolbar-view.component.scss'],

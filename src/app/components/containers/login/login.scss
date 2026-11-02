@@ -31,21 +31,8 @@ input {
   }
 }
 
-button {
+.app-button {
   margin-top: 0.75rem;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 6px;
-  background: #1976d2;
-  color: white;
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
 }
 
 .error-message {

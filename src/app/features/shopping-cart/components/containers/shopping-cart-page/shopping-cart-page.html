@@ -1,13 +1,18 @@
-<button type="button" class="back-button" (click)="goToProducts()">
+<button
+  mat-button
+  type="button"
+  class="app-button"
+  (click)="goToProducts()"
+>
   ← Back to Products
 </button>
 
 <app-shopping-cart-details />
 
-
 <button
+  mat-button
   type="button"
-  class="add-button"
+  class="app-button"
   (click)="checkout()"
   [disabled]="isCheckingOut()"
 >

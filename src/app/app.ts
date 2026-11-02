@@ -1,9 +1,8 @@
-
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { ToolbarViewComponent } from './components/presentational/toolbar-view/toolbar-view.component';
-import { ShoppingCartService } from './features/shopping-cart/services/shopping-cart.service';
-import { AuthService } from './services/auth';
+import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
+import {Router, RouterOutlet} from '@angular/router';
+import {ToolbarViewComponent} from './components/presentational/toolbar-view/toolbar-view.component';
+import {ShoppingCartService} from './features/shopping-cart/services/shopping-cart.service';
+import {AuthService} from './services/auth';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +20,12 @@ export class App implements OnInit {
   protected readonly currentUser = this.authService.currentUser;
   protected readonly isAdmin = this.authService.isAdmin;
 
+  protected readonly isLoginPage = signal(this.router.url === '/login');
+
   ngOnInit(): void {
+    this.router.events.subscribe(() => {
+      this.isLoginPage.set(this.router.url === '/login');
+    });
     if (this.authService.isLoggedIn()) {
       this.authService.loadCurrentUser();
     }

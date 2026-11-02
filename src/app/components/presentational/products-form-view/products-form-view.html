@@ -81,8 +81,25 @@
     }
   </div>
 
+
   <div class="form-actions">
-    <button class="save-button" type="submit" [disabled]="productForm().invalid">Save</button>
-    <button class="cancel-button" type="button" (click)="cancel.emit()">Cancel</button>
+    <button
+      mat-button
+      type="submit"
+      class="app-button"
+      [disabled]="productForm().invalid"
+    >
+      Save
+    </button>
+
+    <button
+      mat-button
+      type="button"
+      class="app-button"
+      (click)="cancel.emit()"
+    >
+      Cancel
+    </button>
   </div>
+
 </form>
