@@ -22,7 +22,6 @@ export interface Order {
   }[];
 }
 
-const CUSTOMER_ID = 'de96921d-2f8d-46e7-8061-31468180de96';
 
 @Injectable({
   providedIn: 'root',
@@ -35,12 +34,14 @@ export class OrdersService {
     return this.http.post<Order>(this.apiUrl, order);
   }
 
+
   createOrderFromCart(
-    items: { product: Product; quantity: number }[]
+    customerId: string,
+    items: { product: Product; quantity: number }[],
   ): Observable<Order> {
     const order: CreateOrderRequest = {
-      customerId: CUSTOMER_ID,
-      products: items.map(item => ({
+      customerId,
+      products: items.map((item) => ({
         productId: item.product.id,
         quantity: item.quantity,
       })),
@@ -48,4 +49,5 @@ export class OrdersService {
 
     return this.createOrder(order);
   }
+
 }

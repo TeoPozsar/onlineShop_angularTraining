@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService, SaveProduct } from '../../../services/products';
 import { ProductsFormViewComponent } from '../../presentational/products-form-view/products-form-view';
+import { ProductForm } from '../../presentational/products-form-view/product-form.types';
 
 @Component({
   selector: 'app-products-form',
@@ -19,7 +20,7 @@ export class ProductsFormComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  protected readonly productForm = this.formBuilder.nonNullable.group({
+  protected readonly productForm: ProductForm = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
     category: ['', Validators.required],
     image: ['', Validators.required],

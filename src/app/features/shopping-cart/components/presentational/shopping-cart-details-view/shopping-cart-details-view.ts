@@ -1,12 +1,11 @@
 
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+} from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { Product } from '../../../../../types/products.types';
-
-export interface CartItem {
-  product: Product;
-  quantity: number;
-}
+import { CartItem } from '../../../types/cart-item.type';
 
 @Component({
   selector: 'app-shopping-cart-details-view',
@@ -14,7 +13,7 @@ export interface CartItem {
   imports: [CurrencyPipe],
   styleUrls: ['./shopping-cart-details-view.scss'],
   templateUrl: './shopping-cart-details-view.html',
-  changeDetection : ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingCartDetailsView {
   readonly items = input<CartItem[]>([]);

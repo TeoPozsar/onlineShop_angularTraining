@@ -19,14 +19,8 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(loadUser),
       switchMap(() =>
-        this.authService.loadCurrentUser$().pipe(
-          map((user) =>
-            user
-              ? loadUserSuccess({ user })
-              : loadUserFailure({
-                error: 'Failed to load user profile',
-              }),
-          ),
+        this.authService.getProfile().pipe(
+          map((user) => loadUserSuccess({ user })),
           catchError((error) =>
             of(
               loadUserFailure({
@@ -38,4 +32,5 @@ export class UserEffects {
       ),
     ),
   );
+
 }

@@ -6,6 +6,7 @@ import { ProductsFormComponent } from './components/containers/products-form/pro
 import { Login } from './components/containers/login/login';
 import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
+import { NotFoundComponent } from './components/containers/not-found/not-found';
 
 const customerGuard = roleGuard(['user', 'customer'], { deniedRoles: ['admin'] });
 
@@ -25,6 +26,7 @@ export const routes: Routes = [
   {
     path: 'products/:id',
     component: ProductsDetailsComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'cart',
@@ -37,4 +39,6 @@ export const routes: Routes = [
     canActivate: [authGuard, customerGuard]
   },
   { path: 'login', component: Login },
+
+  { path: '**', component: NotFoundComponent },
 ];

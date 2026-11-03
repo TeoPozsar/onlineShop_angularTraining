@@ -3,6 +3,8 @@ import {CurrencyPipe} from '@angular/common';
 import {Router} from '@angular/router';
 import {Product} from '../../../types/products.types';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-products-details-view',
@@ -14,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ProductsDetailsViewComponent {
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   readonly product = input.required<Product>();
   readonly isAdmin = input(false);
@@ -30,7 +33,21 @@ export class ProductsDetailsViewComponent {
   }
 
   removeProduct(): void {
-    this.deleteProduct.emit(this.product().id);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '420px',
+      maxWidth: 'calc(100vw - 32px)',
+      data: {
+        title: 'Delete product?',
+        message: `Are you sure you want to delete "${this.product().name}"?`,
+      },
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.deleteProduct.emit(this.product().id);
+      }
+    });
   }
 
   goBackToProducts(): void {

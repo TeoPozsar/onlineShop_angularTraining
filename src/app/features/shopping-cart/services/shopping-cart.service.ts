@@ -1,10 +1,6 @@
 import {computed, Injectable, signal} from '@angular/core';
 import {Product} from '../../../types/products.types';
-
-export interface CartItem {
-  product: Product;
-  quantity: number;
-}
+import { CartItem } from '../types/cart-item.type';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingCartService {
@@ -43,5 +39,9 @@ export class ShoppingCartService {
 
   public clearCart(): void {
     this.cartItems.set([]);
+  }
+
+  public updateItems(items: CartItem[]): void {
+    this.cartItems.set(items);
   }
 }

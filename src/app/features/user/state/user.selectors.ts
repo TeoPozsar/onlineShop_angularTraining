@@ -18,3 +18,15 @@ export const selectUserError = createSelector(
   selectUserState,
   (state) => state.error,
 );
+
+export const selectIsAdmin = createSelector(
+  selectCurrentUser,
+  (user) => user?.roles.includes('admin') ?? false,
+);
+
+export const selectIsCustomer = createSelector(
+  selectCurrentUser,
+  (user) =>
+    user !== null &&
+    !user.roles.includes('admin'),
+);

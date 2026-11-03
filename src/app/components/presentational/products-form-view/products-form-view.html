@@ -1,105 +1,55 @@
+
 <form class="product-form" [formGroup]="productForm()" (ngSubmit)="save.emit()">
   <h1>{{ title() }}</h1>
 
-  <div class="form-field">
-    <label for="name">Name</label>
-    <input
-      id="name"
-      type="text"
-      formControlName="name"
-      [class.invalid]="
-        productForm().controls['name'].invalid && productForm().controls['name'].touched
-      "
-    />
-    @if (productForm().controls['name'].invalid && productForm().controls['name'].touched) {
-      <p class="error-message">Name is required.</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput id="name" type="text" formControlName="name" />
+    @if (productForm().controls.name.hasError('required') && productForm().controls.name.touched) {
+      <mat-error>Name is required.</mat-error>
     }
-  </div>
+  </mat-form-field>
 
-  <div class="form-field">
-    <label for="category">Category</label>
-    <input
-      id="category"
-      type="text"
-      formControlName="category"
-      [class.invalid]="
-        productForm().controls['category'].invalid && productForm().controls['category'].touched
-      "
-    />
-    @if (productForm().controls['category'].invalid && productForm().controls['category'].touched) {
-      <p class="error-message">Category is required.</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Category</mat-label>
+    <input matInput id="category" type="text" formControlName="category" />
+    @if (productForm().controls.category.hasError('required') && productForm().controls.category.touched) {
+      <mat-error>Category is required.</mat-error>
     }
-  </div>
+  </mat-form-field>
 
-  <div class="form-field">
-    <label for="image">Image URL</label>
-    <input
-      id="image"
-      type="url"
-      formControlName="image"
-      [class.invalid]="
-        productForm().controls['image'].invalid && productForm().controls['image'].touched
-      "
-    />
-    @if (productForm().controls['image'].invalid && productForm().controls['image'].touched) {
-      <p class="error-message">Image URL is required.</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Image URL</mat-label>
+    <input matInput id="image" type="url" formControlName="image" />
+    @if (productForm().controls.image.hasError('required') && productForm().controls.image.touched) {
+      <mat-error>Image URL is required.</mat-error>
     }
-  </div>
+  </mat-form-field>
 
-  <div class="form-field">
-    <label for="price">Price</label>
-    <input
-      id="price"
-      type="number"
-      formControlName="price"
-      min="0.01"
-      step="0.01"
-      [class.invalid]="
-        productForm().controls['price'].invalid && productForm().controls['price'].touched
-      "
-    />
-    @if (productForm().controls['price'].invalid && productForm().controls['price'].touched) {
-      <p class="error-message">Price must be greater than zero.</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Price</mat-label>
+    <input matInput id="price" type="number" min="0.01" step="0.01" formControlName="price" />
+    @if (productForm().controls.price.hasError('required') && productForm().controls.price.touched) {
+      <mat-error>Price is required.</mat-error>
+    } @else if (productForm().controls.price.hasError('min') && productForm().controls.price.touched) {
+      <mat-error>Price must be greater than zero.</mat-error>
     }
-  </div>
+  </mat-form-field>
 
-  <div class="form-field">
-    <label for="description">Description</label>
-    <textarea
-      id="description"
-      formControlName="description"
-      rows="5"
-      [class.invalid]="
-        productForm().controls['description'].invalid &&
-        productForm().controls['description'].touched
-      "
-    ></textarea>
-    @if (
-      productForm().controls['description'].invalid && productForm().controls['description'].touched
-    ) {
-      <p class="error-message">Description is required.</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea matInput id="description" formControlName="description" rows="5"></textarea>
+    @if (productForm().controls.description.hasError('required') && productForm().controls.description.touched) {
+      <mat-error>Description is required.</mat-error>
     }
-  </div>
-
+  </mat-form-field>
 
   <div class="form-actions">
-    <button
-      mat-button
-      type="submit"
-      class="app-button"
-      [disabled]="productForm().invalid"
-    >
+    <button mat-flat-button type="submit" [disabled]="productForm().invalid">
       Save
     </button>
-
-    <button
-      mat-button
-      type="button"
-      class="app-button"
-      (click)="cancel.emit()"
-    >
+    <button mat-button type="button" (click)="cancel.emit()">
       Cancel
     </button>
   </div>
-
 </form>

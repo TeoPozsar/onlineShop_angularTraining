@@ -1,4 +1,27 @@
-@if (product(); as selectedProduct) {
+
+@if (isLoading()) {
+  <p>Loading product...</p>
+} @else if (errorMessage()) {
+  <p class="error-message">{{ errorMessage() }}</p>
+  <button
+    mat-stroked-button
+    type="button"
+    class="back-button"
+    (click)="goBackToProducts()"
+  >
+    Back to Products
+  </button>
+} @else if (isNotFound()) {
+  <p>Product not found.</p>
+  <button
+    mat-stroked-button
+    type="button"
+    class="back-button"
+    (click)="goBackToProducts()"
+  >
+    Back to Products
+  </button>
+} @else if (product(); as selectedProduct) {
   <app-products-details-view
     [product]="selectedProduct"
     [isAdmin]="isAdmin()"
@@ -7,6 +30,4 @@
     (editProduct)="onEditProduct($event)"
     (deleteProduct)="onDeleteProduct($event)"
   />
-} @else {
-  <p>Loading product...</p>
 }
