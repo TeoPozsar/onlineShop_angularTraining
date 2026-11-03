@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
 import {
+  clearUser,
   loadUser,
   loadUserSuccess,
   loadUserFailure,
@@ -16,6 +17,7 @@ export const userReducer = createReducer<UserState>(
 
   on(loadUser, (state) => ({
     ...state,
+    user: null,
     loading: true,
     error: null,
   })),
@@ -32,4 +34,6 @@ export const userReducer = createReducer<UserState>(
     loading: false,
     error,
   })),
+
+  on(clearUser, () => initialUserState),
 );

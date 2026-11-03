@@ -45,10 +45,26 @@
   </mat-form-field>
 
   <div class="form-actions">
-    <button mat-flat-button type="submit" [disabled]="productForm().invalid">
-      Save
+    <button
+      mat-flat-button
+      type="submit"
+      [disabled]="productForm().invalid || isSaving() || saveDisabled()"
+    >
+      @if (isSaving()) {
+        Saving...
+      } @else if (isLoading()) {
+        Loading...
+      } @else {
+        Save
+      }
     </button>
-    <button mat-button type="button" (click)="cancel.emit()">
+
+    <button
+      mat-button
+      type="button"
+      (click)="cancel.emit()"
+      [disabled]="isSaving()"
+    >
       Cancel
     </button>
   </div>

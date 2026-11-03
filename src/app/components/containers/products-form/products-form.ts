@@ -1,10 +1,38 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  computed,
+  inject,
+  OnInit,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductsService, SaveProduct } from '../../../services/products';
+import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+import { filter, take } from 'rxjs';
+
 import { ProductsFormViewComponent } from '../../presentational/products-form-view/products-form-view';
 import { ProductForm } from '../../presentational/products-form-view/product-form.types';
+import { Product } from '../../../types/products.types';
+import {
+  loadProduct,
+  createProduct,
+  createProductSuccess,
+  createProductFailure,
+  updateProduct,
+  updateProductSuccess,
+  updateProductFailure,
+} from '../../../features/products/state/products.actions';
+import {
+  selectProductOperationLoading,
+  selectProductOperationError,
+  selectProductsError,
+  selectProductsLoading,
+  selectSelectedProduct,
+} from '../../../features/products/state/products.selectors';
 
 @Component({
   selector: 'app-products-form',
@@ -16,56 +44,134 @@ import { ProductForm } from '../../presentational/products-form-view/product-for
 })
 export class ProductsFormComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
-  private readonly productsService = inject(ProductsService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly store = inject(Store);
+  private readonly actions$ = inject(Actions);
+  private readonly destroyRef = inject(DestroyRef);
 
-  protected readonly productForm: ProductForm = this.formBuilder.nonNullable.group({
-    name: ['', Validators.required],
-    category: ['', Validators.required],
-    image: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0.01)]],
-    description: ['', Validators.required],
-  });
+  protected readonly productForm: ProductForm =
+    this.formBuilder.nonNullable.group({
+      name: ['', Validators.required],
+      category: ['', Validators.required],
+      image: ['', Validators.required],
+      price: [0, [Validators.required, Validators.min(0.01)]],
+      description: ['', Validators.required],
+    });
+
+  protected readonly operationLoading =
+    this.store.selectSignal(selectProductOperationLoading);
+
+  protected readonly operationError =
+    this.store.selectSignal(selectProductOperationError);
+
+  private readonly selectedProduct =
+    this.store.selectSignal(selectSelectedProduct);
+
+  protected readonly productLoading =
+    this.store.selectSignal(selectProductsLoading);
+
+  private readonly productLoadError =
+    this.store.selectSignal(selectProductsError);
 
   private productId: string | null = null;
   protected isEditing = false;
+
+  protected readonly isProductLoaded = computed(
+    () =>
+      !this.isEditing ||
+      (this.productId !== null &&
+        this.selectedProduct()?.id === this.productId),
+  );
+
+  protected readonly loadErrorMessage = computed(() => {
+    if (!this.isEditing || this.productLoading() || this.isProductLoaded()) {
+      return null;
+    }
+
+    return this.productLoadError() ?? 'Product not found.';
+  });
+
+  protected readonly saveDisabled = computed(
+    () => this.isEditing && (this.productLoading() || !this.isProductLoaded()),
+  );
 
   ngOnInit(): void {
     this.productId = this.route.snapshot.paramMap.get('id');
     this.isEditing = this.productId !== null;
 
     if (this.productId) {
-      this.productsService.getProductById(this.productId).subscribe({
-        next: (product) => this.productForm.patchValue(product),
-        error: (error) => console.error('Could not load product', error),
-      });
+      this.store
+        .select(selectSelectedProduct)
+        .pipe(
+          filter(
+            (product): product is Product => product?.id === this.productId,
+          ),
+          take(1),
+          takeUntilDestroyed(this.destroyRef),
+        )
+        .subscribe((product) => {
+          this.productForm.patchValue(product);
+        });
+
+      this.store.dispatch(loadProduct({ id: this.productId }));
     }
   }
 
   protected onSave(): void {
+    if (this.operationLoading()) {
+      return;
+    }
+
+    if (this.isEditing && (this.productLoading() || !this.isProductLoaded())) {
+      return;
+    }
+
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
       return;
     }
 
-    const product: SaveProduct = this.productForm.getRawValue();
+    const product = this.productForm.getRawValue();
 
-    const request = this.productId
-      ? this.productsService.updateProduct(this.productId, product)
-      : this.productsService.createProduct(product);
+    if (this.productId) {
+      this.actions$
+        .pipe(
+          ofType(updateProductSuccess, updateProductFailure),
+          take(1),
+          takeUntilDestroyed(this.destroyRef),
+        )
+        .subscribe((action) => {
+          if (action.type === updateProductSuccess.type) {
+            void this.router.navigate(['/products']);
+          }
+        });
 
-    request.subscribe({
-      next: () => this.router.navigate(['/products']),
-      error: (error) => console.error('Could not save product', error),
-    });
+      this.store.dispatch(
+        updateProduct({ id: this.productId, product }),
+      );
+    } else {
+      this.actions$
+        .pipe(
+          ofType(createProductSuccess, createProductFailure),
+          take(1),
+          takeUntilDestroyed(this.destroyRef),
+        )
+        .subscribe((action) => {
+          if (action.type === createProductSuccess.type) {
+            void this.router.navigate(['/products']);
+          }
+        });
+
+      this.store.dispatch(createProduct({ product }));
+    }
   }
 
   protected onCancel(): void {
     if (this.productId) {
-      this.router.navigate(['/products', this.productId]);
+      void this.router.navigate(['/products', this.productId]);
     } else {
-      this.router.navigate(['/products']);
+      void this.router.navigate(['/products']);
     }
   }
 }

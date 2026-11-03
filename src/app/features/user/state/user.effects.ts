@@ -1,10 +1,11 @@
 
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap, takeUntil } from 'rxjs';
 
 import { AuthService } from '../../../services/auth';
 import {
+  clearUser,
   loadUser,
   loadUserSuccess,
   loadUserFailure,
@@ -28,6 +29,7 @@ export class UserEffects {
               }),
             ),
           ),
+          takeUntil(this.actions$.pipe(ofType(clearUser))),
         ),
       ),
     ),

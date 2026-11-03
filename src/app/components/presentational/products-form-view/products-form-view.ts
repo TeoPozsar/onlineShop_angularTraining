@@ -28,4 +28,7 @@ export class ProductsFormViewComponent {
   readonly title = input.required<string>();
   readonly save = output<void>();
   readonly cancel = output<void>();
+  readonly isSaving = input(false);
+  readonly isLoading = input(false);
+  readonly saveDisabled = input(false);
 }

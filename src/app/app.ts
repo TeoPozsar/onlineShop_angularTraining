@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { ToolbarViewComponent } from './components/presentational/toolbar-view/toolbar-view.component';
 import { ShoppingCartService } from './features/shopping-cart/services/shopping-cart.service';
 import { AuthService } from './services/auth';
-import { loadUser } from './features/user/state/user.actions';
+import { clearUser, loadUser } from './features/user/state/user.actions';
 import {selectCurrentUser,selectIsAdmin} from './features/user/state/user.selectors';
 
 @Component({
@@ -54,6 +54,7 @@ export class App implements OnInit {
 
   protected onLogoutClick(): void {
     this.authService.logout();
+    this.store.dispatch(clearUser());
     void this.router.navigate(['/login']);
   }
 }
