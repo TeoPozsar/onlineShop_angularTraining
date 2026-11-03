@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 import { ProductsDetailsComponent } from './components/containers/products-details/products-details.component';
 import { ShopPageComponent } from './components/containers/shop-page/shop-page.component';
-import { ShoppingCartPage } from './features/shopping-cart/components/containers/shopping-cart-page/shopping-cart-page';
-import { ProductsFormComponent } from './components/containers/products-form/products-form';
-import { Login } from './components/containers/login/login';
+import { ShoppingCartPage } from './features/shopping-cart/components/containers/shopping-cart-page/shopping-cart-page.component';
+import { ProductsFormComponent } from './components/containers/products-form/products-form.component';
+import { Login } from './components/containers/login/login.component';
 import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
-import { NotFoundComponent } from './components/containers/not-found/not-found';
+import { NotFoundComponent } from './components/containers/not-found/not-found.component';
 
 const customerGuard = roleGuard(['user', 'customer'], { deniedRoles: ['admin'] });
 
@@ -26,17 +26,17 @@ export const routes: Routes = [
   {
     path: 'products/:id',
     component: ProductsDetailsComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'cart',
     component: ShoppingCartPage,
-    canActivate: [authGuard, customerGuard]
+    canActivate: [authGuard, customerGuard],
   },
   {
     path: 'checkout',
     component: ShoppingCartPage,
-    canActivate: [authGuard, customerGuard]
+    canActivate: [authGuard, customerGuard],
   },
   { path: 'login', component: Login },
 

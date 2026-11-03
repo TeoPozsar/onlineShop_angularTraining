@@ -1,24 +1,13 @@
-
 @if (isLoading()) {
   <p>Loading product...</p>
 } @else if (errorMessage()) {
   <p class="error-message">{{ errorMessage() }}</p>
-  <button
-    mat-stroked-button
-    type="button"
-    class="back-button"
-    (click)="goBackToProducts()"
-  >
+  <button mat-stroked-button type="button" class="back-button" (click)="goBackToProducts()">
     Back to Products
   </button>
 } @else if (isNotFound()) {
   <p>Product not found.</p>
-  <button
-    mat-stroked-button
-    type="button"
-    class="back-button"
-    (click)="goBackToProducts()"
-  >
+  <button mat-stroked-button type="button" class="back-button" (click)="goBackToProducts()">
     Back to Products
   </button>
 } @else if (product(); as selectedProduct) {
@@ -29,5 +18,6 @@
     (addToCart)="onAddToCart()"
     (editProduct)="onEditProduct($event)"
     (deleteProduct)="onDeleteProduct($event)"
+    (back)="goBackToProducts()"
   />
 }

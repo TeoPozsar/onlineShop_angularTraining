@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProductsFormViewComponent } from './products-form-view';
+import { ProductsFormViewComponent } from './products-form-view.component';
 
 describe('ProductsFormViewComponent', () => {
   let component: ProductsFormViewComponent;
@@ -29,5 +29,15 @@ describe('ProductsFormViewComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('disables the form fields while saving', async () => {
+    fixture.componentRef.setInput('isSaving', true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const fieldset: HTMLFieldSetElement = fixture.nativeElement.querySelector('fieldset');
+
+    expect(fieldset.disabled).toBe(true);
   });
 });

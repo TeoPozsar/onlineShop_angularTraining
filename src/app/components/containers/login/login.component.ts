@@ -1,20 +1,21 @@
-import { Component , ChangeDetectionStrategy , inject } from '@angular/core';
-import { AuthService } from '../../../services/auth';
-import { Router } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule , Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { loadUser } from '../../../features/user/state/user.actions';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { loadUser } from '../../../features/user/state/user.actions';
+import { AuthService } from '../../../services/auth';
 
 @Component({
-  imports: [ReactiveFormsModule , MatButtonModule , MatFormFieldModule , MatInputModule],
+  imports: [ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
   selector: 'app-login',
-  standalone : true,
-  styleUrl: './login.scss',
+  standalone: true,
+  styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './login.html',
+  templateUrl: './login.component.html',
 })
 export class Login {
   private readonly authService = inject(AuthService);
@@ -27,25 +28,24 @@ export class Login {
     password: ['', Validators.required],
   });
 
-  protected errorMessage = '';
+  protected readonly errorMessage = signal('');
 
   protected onLogin(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
-    this.errorMessage = '';
+    this.errorMessage.set('');
 
     this.authService.login(this.loginForm.getRawValue()).subscribe({
-
       next: () => {
         this.store.dispatch(loadUser());
         void this.router.navigate(['/products']);
       },
 
-      error: (error) => {
-        this.errorMessage = 'Invalid username or password';
-      }
+      error: () => {
+        this.errorMessage.set('Invalid username or password');
+      },
     });
   }
 }

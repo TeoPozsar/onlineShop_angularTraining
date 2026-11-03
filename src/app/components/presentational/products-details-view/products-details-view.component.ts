@@ -1,9 +1,9 @@
-import {Component, ChangeDetectionStrategy, inject, input, output} from '@angular/core';
-import {CurrencyPipe} from '@angular/common';
-import {Router} from '@angular/router';
-import {Product} from '../../../types/products.types';
+import { CurrencyPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+
+import { Product } from '../../../types/products.types';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -15,7 +15,6 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsDetailsViewComponent {
-  private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
   readonly product = input.required<Product>();
@@ -26,7 +25,9 @@ export class ProductsDetailsViewComponent {
 
   readonly deleteProduct = output<string>();
 
-  readonly  editProduct = output<string>();
+  readonly editProduct = output<string>();
+
+  readonly back = output<void>();
 
   addProductToCart(): void {
     this.addToCart.emit(this.product());
@@ -51,7 +52,7 @@ export class ProductsDetailsViewComponent {
   }
 
   goBackToProducts(): void {
-    void this.router.navigate(['/products']);
+    this.back.emit();
   }
 
   editProductDetails(): void {

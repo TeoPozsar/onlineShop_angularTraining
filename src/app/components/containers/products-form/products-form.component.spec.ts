@@ -4,13 +4,14 @@ import { Store, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 
-import { ProductsFormComponent } from './products-form';
+import { ProductsFormComponent } from './products-form.component';
 import { productsReducer } from '../../../features/products/state/products.reducer';
 import {
   loadProduct,
   loadProductFailure,
   loadProductSuccess,
   createProduct,
+  createProductFailure,
   updateProduct,
 } from '../../../features/products/state/products.actions';
 import { Product } from '../../../types/products.types';
@@ -60,10 +61,14 @@ describe('ProductsFormComponent', () => {
     return fixture.nativeElement.querySelector('button[type="submit"]');
   }
 
+  function formView(): HTMLElement | null {
+    return fixture.nativeElement.querySelector('app-products-form-view');
+  }
+
   function errorMessages(): string[] {
-    return Array.from<HTMLElement>(
-      fixture.nativeElement.querySelectorAll('.error-message'),
-    ).map((element) => element.textContent?.trim() ?? '');
+    return Array.from<HTMLElement>(fixture.nativeElement.querySelectorAll('.error-message')).map(
+      (element) => element.textContent?.trim() ?? '',
+    );
   }
 
   function fillForm(): void {
@@ -93,15 +98,15 @@ describe('ProductsFormComponent', () => {
 
     it('requests the product once', () => {
       expect(dispatchSpy).toHaveBeenCalledWith(loadProduct({ id: '1' }));
-      const loadCalls = (
-        dispatchSpy.mock.calls as unknown as { type: string }[][]
-      ).filter(([action]) => action.type === loadProduct.type);
+      const loadCalls = (dispatchSpy.mock.calls as unknown as { type: string }[][]).filter(
+        ([action]) => action.type === loadProduct.type,
+      );
 
       expect(loadCalls).toHaveLength(1);
     });
 
-    it('disables the save button', () => {
-      expect(saveButton().disabled).toBe(true);
+    it('does not render the form view', () => {
+      expect(formView()).toBeNull();
     });
 
     it('does not dispatch an update', () => {
@@ -126,8 +131,8 @@ describe('ProductsFormComponent', () => {
       expect(errorMessages()).toContain('Product not found');
     });
 
-    it('keeps the save button disabled', () => {
-      expect(saveButton().disabled).toBe(true);
+    it('hides the form view', () => {
+      expect(formView()).toBeNull();
     });
 
     it('does not dispatch an update', () => {
@@ -230,6 +235,33 @@ describe('ProductsFormComponent', () => {
           },
         }),
       );
+    });
+
+    it('disables the form and prevents repeated submissions while saving', async () => {
+      fillForm();
+      component['onSave']();
+      component['onSave']();
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const createCalls = (dispatchSpy.mock.calls as unknown as { type: string }[][]).filter(
+        ([action]) => action.type === createProduct.type,
+      );
+      const fieldset: HTMLFieldSetElement = fixture.nativeElement.querySelector('fieldset');
+
+      expect(createCalls).toHaveLength(1);
+      expect(fieldset.disabled).toBe(true);
+      expect(saveButton().textContent?.trim()).toBe('Saving...');
+    });
+
+    it('shows a save error separately from load errors', async () => {
+      fillForm();
+      component['onSave']();
+      store.dispatch(createProductFailure({ error: 'Could not save product' }));
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      expect(errorMessages()).toEqual(['Could not save product']);
     });
   });
 });

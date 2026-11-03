@@ -12,9 +12,8 @@
         autocomplete="username"
       />
       @if (
-        loginForm.controls.username.hasError('required') &&
-        loginForm.controls.username.touched
-        ) {
+        loginForm.controls.username.hasError('required') && loginForm.controls.username.touched
+      ) {
         <mat-error>Username is required.</mat-error>
       }
     </mat-form-field>
@@ -29,23 +28,16 @@
         autocomplete="current-password"
       />
       @if (
-        loginForm.controls.password.hasError('required') &&
-        loginForm.controls.password.touched
-        ) {
+        loginForm.controls.password.hasError('required') && loginForm.controls.password.touched
+      ) {
         <mat-error>Password is required.</mat-error>
       }
     </mat-form-field>
 
-    @if (errorMessage) {
-      <p class="error-message">{{ errorMessage }}</p>
+    @if (errorMessage()) {
+      <p class="error-message">{{ errorMessage() }}</p>
     }
 
-    <button
-      mat-flat-button
-      type="submit"
-      [disabled]="loginForm.invalid"
-    >
-      Log in
-    </button>
+    <button mat-flat-button type="submit" [disabled]="loginForm.invalid">Log in</button>
   </form>
 </div>

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { ShoppingCartDetails } from '../shopping-cart-details/shopping-cart-details';
+import { ShoppingCartDetails } from '../shopping-cart-details/shopping-cart-details.component';
 import { OrdersService } from '../../../../../services/orders';
 import { ShoppingCartService } from '../../../services/shopping-cart.service';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from '../../../../user/state/user.selectors';
 
@@ -11,8 +11,8 @@ import { selectCurrentUser } from '../../../../user/state/user.selectors';
   selector: 'app-shopping-cart-page',
   standalone: true,
   imports: [ShoppingCartDetails, MatButtonModule],
-  templateUrl: './shopping-cart-page.html',
-  styleUrls: ['./shopping-cart-page.scss'],
+  templateUrl: './shopping-cart-page.component.html',
+  styleUrls: ['./shopping-cart-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingCartPage {
@@ -54,7 +54,7 @@ export class ShoppingCartPage {
         this.isCheckingOut.set(false);
         this.cartService.clearCart();
       },
-      error: error => {
+      error: (error) => {
         console.error('Failed to create order:', error);
         this.checkoutMessage.set('Checkout failed. Please try again.');
         this.isCheckingOut.set(false);

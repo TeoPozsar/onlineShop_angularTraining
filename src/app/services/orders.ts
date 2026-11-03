@@ -1,9 +1,8 @@
-
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Product } from '../types/products.types';
+import { CartItem } from '../features/shopping-cart/types/cart-item.type';
 
 export interface CreateOrderRequest {
   customerId: string;
@@ -22,7 +21,6 @@ export interface Order {
   }[];
 }
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -34,20 +32,15 @@ export class OrdersService {
     return this.http.post<Order>(this.apiUrl, order);
   }
 
-
-  createOrderFromCart(
-    customerId: string,
-    items: { product: Product; quantity: number }[],
-  ): Observable<Order> {
+  createOrderFromCart(customerId: string, items: CartItem[]): Observable<Order> {
     const order: CreateOrderRequest = {
       customerId,
       products: items.map((item) => ({
-        productId: item.product.id,
+        productId: item.productId,
         quantity: item.quantity,
       })),
     };
 
     return this.createOrder(order);
   }
-
 }

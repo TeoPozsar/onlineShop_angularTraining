@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,18 +9,15 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
 
-import { ProductsFormViewComponent } from '../../presentational/products-form-view/products-form-view';
-import { ProductForm } from '../../presentational/products-form-view/product-form.types';
-import { Product } from '../../../types/products.types';
 import {
-  loadProduct,
   createProduct,
   createProductSuccess,
   createProductFailure,
+  loadProduct,
   updateProduct,
   updateProductSuccess,
   updateProductFailure,
@@ -33,13 +29,16 @@ import {
   selectProductsLoading,
   selectSelectedProduct,
 } from '../../../features/products/state/products.selectors';
+import { Product } from '../../../types/products.types';
+import { ProductForm } from '../../presentational/products-form-view/product-form.types';
+import { ProductsFormViewComponent } from '../../presentational/products-form-view/products-form-view.component';
 
 @Component({
   selector: 'app-products-form',
   standalone: true,
   imports: [ReactiveFormsModule, ProductsFormViewComponent],
-  templateUrl: './products-form.html',
-  styleUrl: './products-form.scss',
+  templateUrl: './products-form.component.html',
+  styleUrl: './products-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsFormComponent implements OnInit {
@@ -50,38 +49,30 @@ export class ProductsFormComponent implements OnInit {
   private readonly actions$ = inject(Actions);
   private readonly destroyRef = inject(DestroyRef);
 
-  protected readonly productForm: ProductForm =
-    this.formBuilder.nonNullable.group({
-      name: ['', Validators.required],
-      category: ['', Validators.required],
-      image: ['', Validators.required],
-      price: [0, [Validators.required, Validators.min(0.01)]],
-      description: ['', Validators.required],
-    });
+  protected readonly productForm: ProductForm = this.formBuilder.nonNullable.group({
+    name: ['', Validators.required],
+    category: ['', Validators.required],
+    image: ['', Validators.required],
+    price: [0, [Validators.required, Validators.min(0.01)]],
+    description: ['', Validators.required],
+  });
 
-  protected readonly operationLoading =
-    this.store.selectSignal(selectProductOperationLoading);
+  protected readonly operationLoading = this.store.selectSignal(selectProductOperationLoading);
 
-  protected readonly operationError =
-    this.store.selectSignal(selectProductOperationError);
+  protected readonly operationError = this.store.selectSignal(selectProductOperationError);
 
-  private readonly selectedProduct =
-    this.store.selectSignal(selectSelectedProduct);
+  private readonly selectedProduct = this.store.selectSignal(selectSelectedProduct);
 
-  protected readonly productLoading =
-    this.store.selectSignal(selectProductsLoading);
+  protected readonly productLoading = this.store.selectSignal(selectProductsLoading);
 
-  private readonly productLoadError =
-    this.store.selectSignal(selectProductsError);
+  private readonly productLoadError = this.store.selectSignal(selectProductsError);
 
   private productId: string | null = null;
   protected isEditing = false;
 
   protected readonly isProductLoaded = computed(
     () =>
-      !this.isEditing ||
-      (this.productId !== null &&
-        this.selectedProduct()?.id === this.productId),
+      !this.isEditing || (this.productId !== null && this.selectedProduct()?.id === this.productId),
   );
 
   protected readonly loadErrorMessage = computed(() => {
@@ -91,6 +82,10 @@ export class ProductsFormComponent implements OnInit {
 
     return this.productLoadError() ?? 'Product not found.';
   });
+
+  protected readonly showForm = computed(
+    () => !this.isEditing || (!this.productLoading() && this.isProductLoaded()),
+  );
 
   protected readonly saveDisabled = computed(
     () => this.isEditing && (this.productLoading() || !this.isProductLoaded()),
@@ -104,9 +99,7 @@ export class ProductsFormComponent implements OnInit {
       this.store
         .select(selectSelectedProduct)
         .pipe(
-          filter(
-            (product): product is Product => product?.id === this.productId,
-          ),
+          filter((product): product is Product => product?.id === this.productId),
           take(1),
           takeUntilDestroyed(this.destroyRef),
         )
@@ -147,9 +140,7 @@ export class ProductsFormComponent implements OnInit {
           }
         });
 
-      this.store.dispatch(
-        updateProduct({ id: this.productId, product }),
-      );
+      this.store.dispatch(updateProduct({ id: this.productId, product }));
     } else {
       this.actions$
         .pipe(
