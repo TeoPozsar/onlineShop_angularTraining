@@ -1,6 +1,23 @@
-
-@if (product) {
-  <app-products-details-view [product]="product" />
-} @else {
-  <p>No product selected.</p>
+@if (isLoading()) {
+  <p>Loading product...</p>
+} @else if (errorMessage()) {
+  <p class="error-message">{{ errorMessage() }}</p>
+  <button mat-stroked-button type="button" class="back-button" (click)="goBackToProducts()">
+    Back to Products
+  </button>
+} @else if (isNotFound()) {
+  <p>Product not found.</p>
+  <button mat-stroked-button type="button" class="back-button" (click)="goBackToProducts()">
+    Back to Products
+  </button>
+} @else if (product(); as selectedProduct) {
+  <app-products-details-view
+    [product]="selectedProduct"
+    [isAdmin]="isAdmin()"
+    [isCustomer]="isCustomer()"
+    (addToCart)="onAddToCart()"
+    (editProduct)="onEditProduct($event)"
+    (deleteProduct)="onDeleteProduct($event)"
+    (back)="goBackToProducts()"
+  />
 }

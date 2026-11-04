@@ -1,19 +1,63 @@
-@if (product) {
-  <section class="product-details">
-    <div class="details-header">
-      <h2>Product: {{ product.name }}</h2>
+
+<section class="product-details">
+  <div class="details-header">
+    <h2>Product: {{ product().name }}</h2>
+    <button
+      mat-button
+      type="button"
+      class="app-button"
+      (click)="goBackToProducts()"
+    >
+      Back to Products
+    </button>
+  </div>
+
+  <div class="details-content">
+    <div class="details-image">
+      <img [src]="product().image" [alt]="product().name" />
     </div>
 
-    <div class="details-content">
-      <div class="details-info">
-        <p><strong>Name:</strong> {{ product.name }}</p>
-        <p><strong>Category:</strong> {{ product.category }}</p>
-        <p><strong>Price:</strong> {{ product.price | currency }}</p>
-        <p><strong>Description:</strong></p>
-        <p>{{ product.description }}</p>
-      </div>
-
-
+    <div class="details-info">
+      <p><strong>Name:</strong> {{ product().name }}</p>
+      <p><strong>Category:</strong> {{ product().category }}</p>
+      <p><strong>Price:</strong> {{ product().price | currency }}</p>
+      <p><strong>Description:</strong></p>
+      <p>{{ product().description }}</p>
     </div>
-  </section>
-}
+  </div>
+
+  <div class="details-actions">
+    @if (isCustomer()) {
+      <button
+        mat-button
+        type="button"
+        class="app-button"
+        [attr.aria-label]="'Add ' + product().name + ' to cart'"
+        (click)="addProductToCart()"
+      >
+        Add to Cart
+      </button>
+    }
+
+    @if (isAdmin()) {
+      <button
+        mat-button
+        type="button"
+        class="app-button"
+        (click)="editProductDetails()"
+      >
+        Edit Product
+      </button>
+
+      <button
+        mat-button
+        type="button"
+        class="app-button"
+        [attr.aria-label]="'Delete ' + product().name"
+        (click)="removeProduct()"
+      >
+        Delete Product
+      </button>
+    }
+  </div>
+</section>

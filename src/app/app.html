@@ -1,9 +1,12 @@
-<h1>Online Shop</h1>
-
-<app-products-list
-  (addToCart)="cart.addToCart($event)"
+@if (!isLoginPage()) {
+<app-toolbar-view
+  title="Online Shop"
+  [cartItemCount]="cartItemCount()"
+  [username]="currentUser()?.username ?? null"
+  [showCart]="!isAdmin()"
+  (cartClick)="onCartClick()"
+  (logoutClick)="onLogoutClick()"
 />
-
-<app-shopping-cart-details #cart />
-
+}
 <router-outlet />
+

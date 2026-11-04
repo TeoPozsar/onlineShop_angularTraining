@@ -1,0 +1,38 @@
+<header class="toolbar">
+  <h1>{{ title() }}</h1>
+
+  <div class="toolbar-actions">
+    @if (username()) {
+      <span class="username">Hello, {{ username() }}</span>
+    }
+
+    @if (showCart()) {
+      <button
+        mat-icon-button
+        class="app-icon-button"
+        type="button"
+        aria-label="Open shopping cart"
+        (click)="onCartClick()"
+      >
+        <span class="cart-icon" aria-hidden="true">&#128722;</span>
+
+        @if (cartItemCount() > 0) {
+          <span class="cart-badge">{{ cartItemCount() }}</span>
+        }
+      </button>
+    }
+  </div>
+</header>
+
+@if (username()) {
+  <div class="logout-row">
+    <button
+      mat-button
+      class="app-button"
+      type="button"
+      (click)="onLogoutClick()"
+    >
+      Logout
+    </button>
+  </div>
+}

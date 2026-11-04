@@ -1,16 +1,60 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ProductsListComponent } from './components/containers/products-list/products-list.component';
-import { ShoppingCartDetails } from './features/shopping-cart/components/containers/shopping-cart-details/shopping-cart-details';
+
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router, RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ToolbarViewComponent } from './components/presentational/toolbar-view/toolbar-view.component';
+import { ShoppingCartService } from './features/shopping-cart/services/shopping-cart.service';
+import { AuthService } from './services/auth';
+import { clearUser, loadUser } from './features/user/state/user.actions';
+import {selectCurrentUser,selectIsAdmin} from './features/user/state/user.selectors';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ProductsListComponent, ShoppingCartDetails],
+  imports: [RouterOutlet, ToolbarViewComponent],
   styleUrl: './app.scss',
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {
-  protected readonly title = signal('online-shop');
+export class App implements OnInit {
+  private readonly router = inject(Router);
+  private readonly cartService = inject(ShoppingCartService);
+  private readonly authService = inject(AuthService);
+  private readonly store = inject(Store);
+  private readonly destroyRef = inject(DestroyRef);
 
+  protected readonly cartItemCount = this.cartService.totalQuantity;
+  protected readonly isLoginPage = signal(this.router.url === '/login');
 
+  protected readonly currentUser = this.store.selectSignal(selectCurrentUser);
+  protected readonly isAdmin = this.store.selectSignal(selectIsAdmin);
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.isLoginPage.set(this.router.url === '/login');
+      });
+
+    if (this.authService.isLoggedIn()) {
+      this.store.dispatch(loadUser());
+    }
+  }
+
+  protected onCartClick(): void {
+    void this.router.navigate(['/cart']);
+  }
+
+  protected onLogoutClick(): void {
+    this.authService.logout();
+    this.store.dispatch(clearUser());
+    void this.router.navigate(['/login']);
+  }
 }
